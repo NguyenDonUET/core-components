@@ -2,74 +2,138 @@ import React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { twMerge } from "tailwind-merge"
 
-const TypographyVariants = cva("font-sans text-secondary-400", {
+const typographyVariants = cva("font-sans", {
   variants: {
-    level: {
-      h1: "text-5xl md:text-h1 font-bold",
-      h2: "text-4xl md:text-h2 font-bold",
-      h3: "text-3xl md:text-h3 font-semibold",
-      h4: "text-2xl md:text-h4 font-semibold",
-      h5: "text-xl md:text-h5 font-medium",
-      h6: "text-lg md:text-h6 font-medium",
-      body: "",
+    variant: {
+      h1: "text-5xl md:text-h1 font-bold text-gray-900",
+      h2: "text-4xl md:text-h2 font-bold text-gray-900",
+      h3: "text-3xl md:text-h3 font-semibold text-gray-900",
+      h4: "text-2xl md:text-h4 font-semibold text-gray-900",
+      h5: "text-xl md:text-h5 font-medium text-gray-900",
+      h6: "text-lg md:text-h6 font-medium text-gray-900",
+      body: "text-base md:text-lg font-normal text-gray-700",
+      caption: "text-sm font-normal text-gray-600",
+      overline: "text-xs font-medium uppercase tracking-wider text-gray-500",
     },
     size: {
-      default: "text-base",
       xs: "text-xs",
       sm: "text-sm",
-      md: "text-base md:text-lg",
-      lg: "text-xl md:text-xl",
+      base: "text-base",
+      lg: "text-lg",
+    },
+    color: {
+      primary: "text-primary-400",
+      secondary: "text-secondary-400",
+      error: "text-error-400",
+      success: "text-success-400",
+      warning: "text-warning-400",
+    },
+    weight: {
+      light: "font-light",
+      normal: "font-normal",
+      medium: "font-medium",
+      semibold: "font-semibold",
+      bold: "font-bold",
     },
   },
   compoundVariants: [
+    // Body variant ignores weight from variant and uses explicit weight
     {
-      level: "body",
-      size: undefined,
-      className: "text-base md:text-lg font-normal",
+      variant: "body",
+      weight: "light",
+      className: "font-light",
+    },
+    {
+      variant: "body",
+      weight: "medium",
+      className: "font-medium",
+    },
+    {
+      variant: "body",
+      weight: "semibold",
+      className: "font-semibold",
+    },
+    {
+      variant: "body",
+      weight: "bold",
+      className: "font-bold",
     },
   ],
   defaultVariants: {
-    level: "body",
-    size: "default",
+    variant: "body",
+    color: undefined,
+    weight: undefined,
+    size: undefined,
   },
 })
 
-type TypographyProps = React.HTMLAttributes<HTMLHeadingElement> &
-  VariantProps<typeof TypographyVariants> & {
-    level?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body"
-    size?: "xs" | "sm" | "md" | "lg" | "default"
-    className?: string
-    children: React.ReactNode
-  }
+// Mapping variant to HTML elements
+const variantElementMap = {
+  h1: "h1",
+  h2: "h2",
+  h3: "h3",
+  h4: "h4",
+  h5: "h5",
+  h6: "h6",
+  body: "p",
+  caption: "span",
+  overline: "span",
+} as const
 
-export default function Typography({
-  level = "body",
-  size,
-  className,
-  children,
-  ...rest
-}: TypographyProps) {
-  let Tag: React.ElementType
-  let variantLevel: TypographyProps["level"]
-  let variantSize: TypographyProps["size"] | undefined = undefined
-
-  if (level && ["h1", "h2", "h3", "h4", "h5", "h6"].includes(level)) {
-    Tag = level as React.ElementType
-    variantLevel = level
-    variantSize = undefined // ignore size for headings
-  } else {
-    Tag = "p"
-    variantLevel = "body"
-    variantSize = size
-  }
-
-  const classes = twMerge(
-    TypographyVariants({ level: variantLevel, size: variantSize, className })
-  )
-
-  return (
-    <Tag className={classes} {...rest}>
-      {children}
-    </Tag>
-  )
+export interface TypographyProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, "color">,
+    VariantProps<typeof typographyVariants> {
+  variant?: keyof typeof variantElementMap
+  as?: React.ElementType
+  children: React.ReactNode
+  className?: string
 }
+
+const Typography = React.forwardRef<HTMLElement, TypographyProps>(
+  (
+    {
+      variant = "body",
+      as,
+      size,
+      color,
+      weight,
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    // Determine the HTML element to use
+    const Element = as || variantElementMap[variant || "body"]
+
+    // For headings, ignore size prop as they have predefined sizes
+    const isHeading =
+      variant && ["h1", "h2", "h3", "h4", "h5", "h6"].includes(variant)
+    const effectiveSize = isHeading ? undefined : size
+
+    // For headings, ignore weight prop as they have predefined weights
+    const effectiveWeight = isHeading ? undefined : weight
+
+    return (
+      <Element
+        ref={ref}
+        className={twMerge(
+          typographyVariants({
+            variant,
+            size: effectiveSize,
+            color,
+            weight: effectiveWeight,
+          }),
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Element>
+    )
+  }
+)
+
+Typography.displayName = "Typography"
+
+export default Typography
