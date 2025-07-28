@@ -18,18 +18,17 @@ const preview: Preview = {
       test: "todo",
     },
   },
-
-  decorators: [
-    withThemeByDataAttribute({
-      themes: {
-        // nameOfTheme: 'dataAttributeForTheme',
-        light: "",
-        dark: "dark",
-      },
-      defaultTheme: "light",
-      attributeName: "data-theme",
-    }),
-  ],
 };
 
 export default preview;
+
+export const decorators = [
+  withThemeByDataAttribute({
+    themes: {
+      light: "light",
+      dark: "dark",
+    },
+    defaultTheme: "light",
+    attributeName: "data-mode",
+  }),
+];
