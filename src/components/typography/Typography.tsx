@@ -1,6 +1,6 @@
-import React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { twMerge } from "tailwind-merge"
+import React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { twMerge } from "tailwind-merge";
 
 const typographyVariants = cva("font-sans", {
   variants: {
@@ -13,7 +13,6 @@ const typographyVariants = cva("font-sans", {
       h6: "text-lg md:text-h6 font-medium text-gray-900",
       body: "text-base md:text-lg font-normal text-gray-700",
       caption: "text-sm font-normal text-gray-600",
-      overline: "text-xs font-medium uppercase tracking-wider text-gray-500",
     },
     size: {
       xs: "text-xs",
@@ -65,7 +64,7 @@ const typographyVariants = cva("font-sans", {
     weight: undefined,
     size: undefined,
   },
-})
+});
 
 // Mapping variant to HTML elements
 const variantElementMap = {
@@ -77,16 +76,15 @@ const variantElementMap = {
   h6: "h6",
   body: "p",
   caption: "span",
-  overline: "span",
-} as const
+} as const;
 
 export interface TypographyProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "color">,
     VariantProps<typeof typographyVariants> {
-  variant?: keyof typeof variantElementMap
-  as?: React.ElementType
-  children: React.ReactNode
-  className?: string
+  variant?: keyof typeof variantElementMap;
+  as?: React.ElementType;
+  children: React.ReactNode;
+  className?: string;
 }
 
 const Typography = React.forwardRef<HTMLElement, TypographyProps>(
@@ -104,15 +102,15 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
     ref
   ) => {
     // Determine the HTML element to use
-    const Element = as || variantElementMap[variant || "body"]
+    const Element = as || variantElementMap[variant || "body"];
 
     // For headings, ignore size prop as they have predefined sizes
     const isHeading =
-      variant && ["h1", "h2", "h3", "h4", "h5", "h6"].includes(variant)
-    const effectiveSize = isHeading ? undefined : size
+      variant && ["h1", "h2", "h3", "h4", "h5", "h6"].includes(variant);
+    const effectiveSize = isHeading ? undefined : size;
 
     // For headings, ignore weight prop as they have predefined weights
-    const effectiveWeight = isHeading ? undefined : weight
+    const effectiveWeight = isHeading ? undefined : weight;
 
     return (
       <Element
@@ -130,10 +128,10 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       >
         {children}
       </Element>
-    )
+    );
   }
-)
+);
 
-Typography.displayName = "Typography"
+Typography.displayName = "Typography";
 
-export default Typography
+export default Typography;

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
-import Typography from "./Typography"
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import Typography from "./Typography";
 
 const meta: Meta<typeof Typography> = {
   title: "Components/Typography",
@@ -67,8 +67,7 @@ const meta: Meta<typeof Typography> = {
       control: "text",
       description: "Override the default HTML element",
       table: {
-        type: { summary: "React.ElementType" },
-        defaultValue: { summary: "determined by variant" },
+        disable: true,
       },
     },
     children: {
@@ -78,85 +77,73 @@ const meta: Meta<typeof Typography> = {
     className: {
       control: "text",
       description: "Additional CSS classes",
+      table: {
+        disable: true,
+      },
     },
   },
   tags: ["autodocs"],
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-      <Typography variant='h1'>Heading 1 - Main Title</Typography>
-      <Typography variant='h2'>Heading 2 - Section Title</Typography>
-      <Typography variant='h3'>Heading 3 - Subsection</Typography>
-      <Typography variant='h4'>Heading 4 - Minor Heading</Typography>
-      <Typography variant='h5'>Heading 5 - Small Heading</Typography>
-      <Typography variant='h6'>Heading 6 - Smallest Heading</Typography>
-      <Typography variant='body'>
-        Body text - Default paragraph text for content
-      </Typography>
-      <Typography variant='caption'>
-        Caption text - For image captions and secondary info
-      </Typography>
-      <Typography variant='overline'>
-        Overline text - For labels and categories
-      </Typography>
-    </div>
-  ),
-}
+  // parameters: {
+  //   // controls: { disable: true },
+  // },
+  // render: () => (
+  //   <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+  //     <Typography>Body text - Default paragraph text for content</Typography>
+  //   </div>
+  // ),
+  args: {
+    variant: "body",
+    children: "Body text - Default paragraph text for content",
+  },
+};
 
 export const Heading1: Story = {
   args: {
     variant: "h1",
     children: "Main Page Title",
   },
-}
+};
 
 export const Heading2: Story = {
   args: {
     variant: "h2",
     children: "Section Title",
   },
-}
+};
 
 export const Heading3: Story = {
   args: {
     variant: "h3",
     children: "Subsection Title",
   },
-}
+};
 
 export const Heading4: Story = {
   args: {
     variant: "h4",
     children: "Minor Heading",
   },
-}
+};
 
 export const Heading5: Story = {
   args: {
     variant: "h5",
     children: "Small Heading",
   },
-}
+};
 
 export const Heading6: Story = {
   args: {
     variant: "h6",
     children: "Smallest Heading",
   },
-}
-
-export const BodyDefault: Story = {
-  args: {
-    variant: "body",
-    children:
-      "This is the default body text used for paragraphs and general content.",
-  },
-}
+};
 
 export const BodySizes: Story = {
   parameters: {
@@ -164,21 +151,21 @@ export const BodySizes: Story = {
   },
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <Typography variant='body' size='xs'>
+      <Typography variant="body" size="xs">
         Extra small body text
       </Typography>
-      <Typography variant='body' size='sm'>
+      <Typography variant="body" size="sm">
         Small body text
       </Typography>
-      <Typography variant='body' size='base'>
+      <Typography variant="body" size="base">
         Base body text (default)
       </Typography>
-      <Typography variant='body' size='lg'>
+      <Typography variant="body" size="lg">
         Large body text
       </Typography>
     </div>
   ),
-}
+};
 
 export const BodyWeights: Story = {
   parameters: {
@@ -191,24 +178,24 @@ export const BodyWeights: Story = {
   },
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <Typography variant='body' weight='light'>
+      <Typography variant="body" weight="light">
         Light weight body text
       </Typography>
-      <Typography variant='body' weight='normal'>
+      <Typography variant="body" weight="normal">
         Normal weight body text (default)
       </Typography>
-      <Typography variant='body' weight='medium'>
+      <Typography variant="body" weight="medium">
         Medium weight body text
       </Typography>
-      <Typography variant='body' weight='semibold'>
+      <Typography variant="body" weight="semibold">
         Semibold weight body text
       </Typography>
-      <Typography variant='body' weight='bold'>
+      <Typography variant="body" weight="bold">
         Bold weight body text
       </Typography>
     </div>
   ),
-}
+};
 
 export const CaptionVariants: Story = {
   parameters: {
@@ -221,19 +208,19 @@ export const CaptionVariants: Story = {
   },
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <Typography variant='caption'>Default caption text</Typography>
-      <Typography variant='caption' size='xs'>
+      <Typography variant="caption">Default caption text</Typography>
+      <Typography variant="caption" size="xs">
         Extra small caption
       </Typography>
-      <Typography variant='caption' weight='medium'>
+      <Typography variant="caption" weight="medium">
         Medium weight caption
       </Typography>
-      <Typography variant='caption' weight='semibold'>
+      <Typography variant="caption" weight="semibold">
         Semibold caption
       </Typography>
     </div>
   ),
-}
+};
 
 export const ColorVariants: Story = {
   parameters: {
@@ -248,7 +235,7 @@ export const ColorVariants: Story = {
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
       <div>
-        <Typography variant='h3'>Heading Colors</Typography>
+        <Typography variant="h3">Heading Colors</Typography>
         <div
           style={{
             display: "flex",
@@ -257,26 +244,26 @@ export const ColorVariants: Story = {
             marginTop: "1rem",
           }}
         >
-          <Typography variant='h4' color='primary'>
+          <Typography variant="h4" color="primary">
             Primary Color Heading
           </Typography>
-          <Typography variant='h4' color='secondary'>
+          <Typography variant="h4" color="secondary">
             Secondary Color Heading
           </Typography>
-          <Typography variant='h4' color='error'>
+          <Typography variant="h4" color="error">
             Error Color Heading
           </Typography>
-          <Typography variant='h4' color='success'>
+          <Typography variant="h4" color="success">
             Success Color Heading
           </Typography>
-          <Typography variant='h4' color='warning'>
+          <Typography variant="h4" color="warning">
             Warning Color Heading
           </Typography>
         </div>
       </div>
 
       <div>
-        <Typography variant='h3'>Body Text Colors</Typography>
+        <Typography variant="h3">Body Text Colors</Typography>
         <div
           style={{
             display: "flex",
@@ -285,26 +272,26 @@ export const ColorVariants: Story = {
             marginTop: "1rem",
           }}
         >
-          <Typography variant='body' color='primary'>
+          <Typography variant="body" color="primary">
             Primary color body text
           </Typography>
-          <Typography variant='body' color='secondary'>
+          <Typography variant="body" color="secondary">
             Secondary color body text
           </Typography>
-          <Typography variant='body' color='error'>
+          <Typography variant="body" color="error">
             Error color body text
           </Typography>
-          <Typography variant='body' color='success'>
+          <Typography variant="body" color="success">
             Success color body text
           </Typography>
-          <Typography variant='body' color='warning'>
+          <Typography variant="body" color="warning">
             Warning color body text
           </Typography>
         </div>
       </div>
     </div>
   ),
-}
+};
 
 export const TypographyScale: Story = {
   parameters: {
@@ -318,15 +305,14 @@ export const TypographyScale: Story = {
   },
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-      <Typography variant='h1'>The Quick Brown Fox (H1)</Typography>
-      <Typography variant='h2'>The Quick Brown Fox (H2)</Typography>
-      <Typography variant='h3'>The Quick Brown Fox (H3)</Typography>
-      <Typography variant='h4'>The Quick Brown Fox (H4)</Typography>
-      <Typography variant='h5'>The Quick Brown Fox (H5)</Typography>
-      <Typography variant='h6'>The Quick Brown Fox (H6)</Typography>
-      <Typography variant='body'>The Quick Brown Fox (Body)</Typography>
-      <Typography variant='caption'>The Quick Brown Fox (Caption)</Typography>
-      <Typography variant='overline'>The Quick Brown Fox (Overline)</Typography>
+      <Typography variant="h1">The Quick Brown Fox (H1)</Typography>
+      <Typography variant="h2">The Quick Brown Fox (H2)</Typography>
+      <Typography variant="h3">The Quick Brown Fox (H3)</Typography>
+      <Typography variant="h4">The Quick Brown Fox (H4)</Typography>
+      <Typography variant="h5">The Quick Brown Fox (H5)</Typography>
+      <Typography variant="h6">The Quick Brown Fox (H6)</Typography>
+      <Typography variant="body">The Quick Brown Fox (Body)</Typography>
+      <Typography variant="caption">The Quick Brown Fox (Caption)</Typography>
     </div>
   ),
-}
+};
